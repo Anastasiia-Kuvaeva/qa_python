@@ -27,7 +27,8 @@ class TestBooksCollector:
         name = 'Гарри Поттер'
         genre = 'Фантастика'
         collector = BooksCollector()
-        self.add_book_with_genre_to_books_genre(collector, name, genre)
+        collector.add_new_book(name)
+        collector.set_book_genre(name, genre)
         assert collector.books_genre[name] == genre
 
     # Позитивный тест. Получаем жанр книги по её имени
@@ -35,7 +36,8 @@ class TestBooksCollector:
         name = 'Гарри Поттер'
         genre = 'Фантастика'
         collector = BooksCollector()
-        self.add_book_with_genre_to_books_genre(collector, name, genre)
+        collector.add_new_book(name)
+        collector.set_book_genre(name, genre)
         assert collector.get_book_genre(name) == genre
 
     # Позитивный тест. Выводим список книг с определённым жанром
@@ -46,7 +48,8 @@ class TestBooksCollector:
         collector = BooksCollector()
         # добавление книг в books_genre
         for name, genre in books.items():
-            self.add_book_with_genre_to_books_genre(collector, name, genre)
+            collector.add_new_book(name)
+            collector.set_book_genre(name, genre)
         # проверка, что с данным жанром у нас 2 книги
         assert len(collector.get_books_with_specific_genre(etalon_genre)) == 2
 
@@ -56,7 +59,8 @@ class TestBooksCollector:
                  'Гарри Поттер и филосовский камень': 'Фантастика'}
         collector = BooksCollector()
         for name, genre in books.items():
-            self.add_book_with_genre_to_books_genre(collector, name, genre)
+            collector.add_new_book(name)
+            collector.set_book_genre(name, genre)
         assert collector.get_books_genre() == books
 
     # Позитивный тест. Возвращаем книги, подходящие детям
@@ -69,10 +73,12 @@ class TestBooksCollector:
         collector = BooksCollector()
         for name, genre in books_adult.items():
             # добавление книги в books_genre
-            self.add_book_with_genre_to_books_genre(collector, name, genre)
+            collector.add_new_book(name)
+            collector.set_book_genre(name, genre)
         for name, genre in books_children.items():
             # добавление книги в books_genre
-            self.add_book_with_genre_to_books_genre(collector, name, genre)
+            collector.add_new_book(name)
+            collector.set_book_genre(name, genre)
             books_children_names.append(name)
         assert collector.get_books_for_children() == books_children_names
 
@@ -82,7 +88,8 @@ class TestBooksCollector:
         genre = 'Фантастика'
         collector = BooksCollector()
         # добавление книги в books_genre
-        self.add_book_with_genre_to_books_genre(collector, name, genre)
+        collector.add_new_book(name)
+        collector.set_book_genre(name, genre)
         # добавление книги в избранные
         collector.add_book_in_favorites(name)
         assert len(collector.favorites) == 1
@@ -101,7 +108,8 @@ class TestBooksCollector:
         genre = 'Фантастика'
         collector = BooksCollector()
         # добавление книги в books_genre
-        self.add_book_with_genre_to_books_genre(collector, name, genre)
+        collector.add_new_book(name)
+        collector.set_book_genre(name, genre)
         # добавление книги в избранные
         collector.add_book_in_favorites(name)
         # удаление книги из избранных
@@ -116,13 +124,9 @@ class TestBooksCollector:
         collector = BooksCollector()
         for name, genre in books.items():
             # добавление книги в books_genre
-            self.add_book_with_genre_to_books_genre(collector, name, genre)
+            collector.add_new_book(name)
+            collector.set_book_genre(name, genre)
             # добавление книги в избранные
             collector.add_book_in_favorites(name)
             favorites_books_names.append(name)
         assert collector.get_list_of_favorites_books() == favorites_books_names
-
-    # Вспомогательный метод. Добавление книги с жанром в словарь books_genre
-    def add_book_with_genre_to_books_genre(self, collector, name, genre):
-        collector.add_new_book(name)
-        collector.set_book_genre(name, genre)
