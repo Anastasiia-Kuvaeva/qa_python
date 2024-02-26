@@ -29,15 +29,6 @@ class TestBooksCollector:
         collector = BooksCollector()
         collector.add_new_book(name)
         collector.set_book_genre(name, genre)
-        assert collector.books_genre[name] == genre
-
-    # Позитивный тест. Получаем жанр книги по её имени
-    def test_get_book_genre_for_one_book(self):
-        name = 'Гарри Поттер'
-        genre = 'Фантастика'
-        collector = BooksCollector()
-        collector.add_new_book(name)
-        collector.set_book_genre(name, genre)
         assert collector.get_book_genre(name) == genre
 
     # Позитивный тест. Выводим список книг с определённым жанром
@@ -92,15 +83,15 @@ class TestBooksCollector:
         collector.set_book_genre(name, genre)
         # добавление книги в избранные
         collector.add_book_in_favorites(name)
-        assert len(collector.favorites) == 1
-        assert collector.favorites[0] == name
+        assert len(collector.get_list_of_favorites_books()) == 1
+        assert collector.get_list_of_favorites_books()[0] == name
 
     # Негативный тест. Добавить книгу в избранное, которой нет в списке книг
     def test_add_book_in_favorites_missing_in_books_genre(self):
         name = 'Гарри Поттер'
         collector = BooksCollector()
         collector.add_book_in_favorites(name)
-        assert len(collector.favorites) == 0
+        assert len(collector.get_list_of_favorites_books()) == 0
 
     # Позитивный тест. Удаляем книгу из Избранного
     def test_delete_book_from_favorites_for_one_book(self):
@@ -114,7 +105,7 @@ class TestBooksCollector:
         collector.add_book_in_favorites(name)
         # удаление книги из избранных
         collector.delete_book_from_favorites(name)
-        assert len(collector.favorites) == 0
+        assert len(collector.get_list_of_favorites_books()) == 0
 
     # Позитивный тест. Получаем список Избранных книг
     def test_get_list_of_favorites_books_for_two_books(self):
